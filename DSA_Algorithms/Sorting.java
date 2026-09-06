@@ -178,6 +178,115 @@ final class Sorting extends ArrayX
 
         IsSorted = true;
     }
+
+    public void mergeSort(int left, int right)
+    {
+        // Base condition
+        if(left >= right)
+        {
+            return;
+        }
+
+        // Find middle index
+        int mid = (left + right) / 2;
+
+        // Recursively sort left half
+        mergeSort(left, mid);
+
+        // Recursively sort right half
+        mergeSort(mid + 1, right);
+
+        // Temporary array
+        int temp[] = new int[Arr.length];
+
+        // i points to left half
+        int i = left;
+
+        // j points to right half
+        int j = mid + 1;
+
+        // k points to temp array
+        int k = left;
+
+        // Compare both halves
+        while(i <= mid && j <= right)
+        {
+            if(Arr[i] < Arr[j])
+            {
+                temp[k] = Arr[i];
+                i++;
+            }
+            else
+            {
+                temp[k] = Arr[j];
+                j++;
+            }
+
+            k++;
+        }
+
+        // Copy remaining elements from left half
+        while(i <= mid)
+        {
+            temp[k] = Arr[i];
+
+            i++;
+            k++;
+        }
+
+        // Copy remaining elements from right half
+        while(j <= right)
+        {
+            temp[k] = Arr[j];
+
+            j++;
+            k++;
+        }
+
+        // Copy temp back to original array
+        for(i = left; i <= right; i++)
+        {
+            Arr[i] = temp[i];
+        }
+    }
+
+    public void quickSort(int low, int high)
+    {
+        if(low < high)
+        {
+            int pivot = Arr[high];
+            int i = low - 1;
+
+            // Partition
+            for(int j = low; j < high; j++)
+            {
+                if(Arr[j] < pivot)
+                {
+                    i++;
+
+                    if(i == j)
+                    {
+                        continue;
+                    }
+                    
+                    int temp = Arr[i];
+                    Arr[i] = Arr[j];
+                    Arr[j] = temp;
+                }
+            }
+
+            // Put pivot at correct position
+            i++;
+
+            int temp = Arr[i];
+            Arr[i] = Arr[high];
+            Arr[high] = temp;
+
+            // Recursion
+            quickSort(Arr, low, i - 1);
+            quickSort(Arr, i + 1, high);
+        }
+    }
 }
 
 class Sorting
